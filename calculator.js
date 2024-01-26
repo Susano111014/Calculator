@@ -26,4 +26,9 @@ let sum = add(number1, number2);
 let subtraction = subtract(number1, number2);
 let increase = multiply(number1, number2);
 let divide = beDivide(number1,number2);
-console.log(divide);
+console.log(operate(multiply, number1, number2));
+
+function operate(operation, num1, num2) {
+    const result = operation(num1, num2);
+    return result
+}
