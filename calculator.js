@@ -1,5 +1,5 @@
-let number1 = 10;
-let number2 = 5;
+let digit1;
+let digit2;
 let operator;
 
 function add (num1, num2) {
@@ -22,13 +22,19 @@ function beDivide (num1, num2) {
     return divide
 }
 
-let sum = add(number1, number2);
-let subtraction = subtract(number1, number2);
-let increase = multiply(number1, number2);
-let divide = beDivide(number1,number2);
-console.log(operate(multiply, number1, number2));
-
 function operate(operation, num1, num2) {
     const result = operation(num1, num2);
     return result
 }
+
+const displayValue = document.querySelectorAll('.digit');
+const screen = document.querySelector('.screen');
+const operators = document.querySelectorAll('.operator');
+
+function DisplayScreen(digit) {
+    alert(digit);
+}
+
+displayValue.forEach((digits) => {
+    digits.addEventListener('click',(e) => DisplayScreen(e.target.textContent))
+});
