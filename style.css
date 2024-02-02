@@ -60,3 +60,7 @@ button{
     height: 120px;
     color: white;
 }
+
+.digit-style {
+    font-size: 50px;
+}

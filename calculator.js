@@ -28,11 +28,11 @@ function operate(operation, num1, num2) {
 }
 
 const displayValue = document.querySelectorAll('.digit');
-const screen = document.querySelector('.screen');
 const operators = document.querySelectorAll('.operator');
+const screen = document.querySelector('.screen');
 
 function DisplayScreen(digit) {
-    alert(digit);
+    screen.innerHTML = `<span class='digit-style'>${digit}</span>`;
 }
 
 displayValue.forEach((digits) => {
