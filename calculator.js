@@ -1,5 +1,5 @@
-let digit1 = 0;
-let digit2 = 0;
+let digit1;
+let digit2;
 let operator;
 
 
@@ -27,34 +27,57 @@ function operate(operation, num1, num2) {
     const result = operation(num1, num2);
     return result
 }
+
+function typeOp(op) {
+    let type;
+    if (op === '+') {
+        type = add;
+        return type
+    } else if (op === "-") {
+        type = subtract;
+        return type
+    } else if (op === "x") {
+        return type = multiply;
+    } else {
+        return type = beDivide;
+    }
+}
+
 const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
-let currentNum = '';
-
-
-
-
-// function clickOperator() {
-//     operators.forEach(typeOp => {
-//         typeOp.addEventListener('click', (e) => {
-//             currentOperator = e.target.textContent;
-//         })
-//     })
-// }
-
-// clickOperator();
+let currentNum = [];
 
 function showMeTheNum() {
+    let numInt = 0;
     displayValue.forEach((digits) => {
         digits.addEventListener('click', (e) => {
-            currentNum += e.target.textContent;
-            numInt = currentNum;
+            currentNum.push(e.target.textContent)
+            numInt = currentNum.join('');
             screen.innerHTML = `<span class='digit-style'>${numInt}</span>`
         })
     })
-} 
-
+}
 showMeTheNum();
 
-//The display screen's and showMeTheNum's functions have been merged in one function 
+function clickOperator() {
+    operators.forEach(Op => {
+        Op.addEventListener('click', (e) => {
+            const currentOperator = e.target.textContent;
+            if (!digit1) {
+                digit1 = currentNum.join('');
+                digit1 = parseInt(digit1);
+                currentNum = [];
+                operator = currentOperator;
+            } else {
+                digit2 = currentNum.join('');
+                digit2 = parseInt(digit2);
+                const knowOp = typeOp(operator);
+                const result = operate(knowOp, digit1, digit2);
+                screen.innerHTML = `<span class='digit-style'>${result}</span>`;
+            }
+        })
+    })
+}
+
+clickOperator();
