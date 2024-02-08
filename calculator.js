@@ -45,6 +45,13 @@ function typeOp(op) {
     }
 }
 
+function clearCalculator() {
+    currentNum = [];
+    digit1 = 0;
+    operator = undefined;
+    digit2 = 0;
+}
+
 const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
@@ -54,6 +61,11 @@ function showMeTheNum() {
     let numInt = 0;
     displayValue.forEach((digits) => {
         digits.addEventListener('click', (e) => {
+            if(e.target.textContent === "C"){
+                clearCalculator();
+                screen.innerHTML = `<span class='digit-style'>${''}</span>`
+                return
+            }
             currentNum.push(e.target.textContent)
             numInt = currentNum.join('');
             screen.innerHTML = `<span class='digit-style'>${numInt}</span>`
