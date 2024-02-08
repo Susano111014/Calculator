@@ -38,8 +38,10 @@ function typeOp(op) {
         return type
     } else if (op === "x") {
         return type = multiply;
-    } else {
+    } else if(op === '÷'){
         return type = beDivide;
+    }else {
+
     }
 }
 
@@ -64,6 +66,11 @@ function clickOperator() {
     operators.forEach(Op => {
         Op.addEventListener('click', (e) => {
             const currentOperator = e.target.textContent;
+            if(operator === "="){
+                operator = currentOperator;
+                return
+            }
+
             if (!digit1) {
                 digit1 = currentNum.join('');
                 digit1 = parseInt(digit1);
@@ -75,6 +82,10 @@ function clickOperator() {
                 const knowOp = typeOp(operator);
                 const result = operate(knowOp, digit1, digit2);
                 screen.innerHTML = `<span class='digit-style'>${result}</span>`;
+                digit1 = result;
+                digit2 = 0;
+                operator = currentOperator;
+                currentNum = [];
             }
         })
     })
