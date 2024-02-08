@@ -19,6 +19,10 @@ function multiply(num1, num2) {
 }
 
 function beDivide(num1, num2) {
+    if(num1 === 0 || num2 === 0){
+        screen.innerHTML = `<span class='digit-style'>${'XD'}</span>`
+        return 'XD'
+    }
     const divide = num1 / num2;
     return divide
 }
@@ -92,6 +96,7 @@ function clickOperator() {
                 digit2 = currentNum.join('');
                 digit2 = parseInt(digit2);
                 const knowOp = typeOp(operator);
+                if(knowOp === "XD"){return}
                 const result = operate(knowOp, digit1, digit2);
                 screen.innerHTML = `<span class='digit-style'>${result}</span>`;
                 digit1 = result;
