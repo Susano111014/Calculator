@@ -19,7 +19,7 @@ function multiply(num1, num2) {
 }
 
 function beDivide(num1, num2) {
-    if(num1 === 0 || num2 === 0){
+    if (num1 === 0 || num2 === 0) {
         screen.innerHTML = `<span class='digit-style'>${'XD'}</span>`
         return 'XD'
     }
@@ -42,10 +42,8 @@ function typeOp(op) {
         return type
     } else if (op === "x") {
         return type = multiply;
-    } else if(op === '÷'){
+    } else if (op === '÷') {
         return type = beDivide;
-    }else {
-
     }
 }
 
@@ -54,25 +52,33 @@ function clearCalculator() {
     digit1 = 0;
     operator = undefined;
     digit2 = 0;
+    dot = '';
+    document.querySelector('.dot').disabled = false;
+
 }
 
 const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
 let currentNum = [];
+let dot;
 
 function showMeTheNum() {
     let numInt = 0;
     displayValue.forEach((digits) => {
         digits.addEventListener('click', (e) => {
-            if(e.target.textContent === "C"){
+            if (e.target.textContent === "AC") {
                 clearCalculator();
                 screen.innerHTML = `<span class='digit-style'>${''}</span>`
                 return
+            }if(e.target.textContent === "." && !dot) {
+                dot = e.target.textContent;
+                document.querySelector('.dot').disabled = true;
             }
-            currentNum.push(e.target.textContent)
+            currentNum.push(e.target.textContent);
+            currentNum.splice(16, );
             numInt = currentNum.join('');
-            screen.innerHTML = `<span class='digit-style'>${numInt}</span>`
+            screen.innerHTML = `<span class='digit-style'>${numInt}</span>`;
         })
     })
 }
@@ -82,27 +88,34 @@ function clickOperator() {
     operators.forEach(Op => {
         Op.addEventListener('click', (e) => {
             const currentOperator = e.target.textContent;
-            if(operator === "="){
+            if (operator === "=") {
                 operator = currentOperator;
                 return
             }
-
             if (!digit1) {
                 digit1 = currentNum.join('');
-                digit1 = parseInt(digit1);
+                digit1 = Number(digit1);
                 currentNum = [];
                 operator = currentOperator;
+                dot = "";
+                document.querySelector('.dot').disabled = false;
             } else {
                 digit2 = currentNum.join('');
-                digit2 = parseInt(digit2);
+                digit2 = Number(digit2);
                 const knowOp = typeOp(operator);
-                if(knowOp === "XD"){return}
-                const result = operate(knowOp, digit1, digit2);
+                if (knowOp === "XD") { return }
+                const longResult = operate(knowOp, digit1, digit2);
+                let result = longResult.toString();
+                result = result.split('');
+                result.splice(16, );
+                result = Number(result.join(''));
                 screen.innerHTML = `<span class='digit-style'>${result}</span>`;
                 digit1 = result;
                 digit2 = 0;
                 operator = currentOperator;
                 currentNum = [];
+                dot = "";
+                document.querySelector('.dot').disabled = false;
             }
         })
     })

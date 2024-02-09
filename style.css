@@ -24,6 +24,10 @@
     margin-left: 10px;
 }
 
+/* .digit {
+    font-size: 35px;
+} */
+
 .operators {
     width: 30%;
     display: flex;
@@ -46,6 +50,10 @@ button{
     height: 85px; 
 }
 
+p.delete {
+    font-size: 80px;
+}
+
 .operator.equals {
     margin-right: 10px;
 }
@@ -62,5 +70,5 @@ button{
 }
 
 .digit-style {
-    font-size: 50px;
+    font-size: 100px;
 }
