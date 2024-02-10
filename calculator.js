@@ -76,7 +76,7 @@ function showMeTheNum() {
                 document.querySelector('.dot').disabled = true;
             }
             currentNum.push(e.target.textContent);
-            currentNum.splice(16, );
+            currentNum.splice(13, );
             numInt = currentNum.join('');
             screen.innerHTML = `<span class='digit-style'>${numInt}</span>`;
         })
@@ -107,7 +107,7 @@ function clickOperator() {
                 const longResult = operate(knowOp, digit1, digit2);
                 let result = longResult.toString();
                 result = result.split('');
-                result.splice(16, );
+                result.splice(13, );
                 result = Number(result.join(''));
                 screen.innerHTML = `<span class='digit-style'>${result}</span>`;
                 digit1 = result;
