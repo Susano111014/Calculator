@@ -57,6 +57,18 @@ function clearCalculator() {
 
 }
 
+function ifCurrentNumIsLong (num){
+    if(num.length > 9){
+          return true
+    }else {
+        false
+    }
+}
+
+// function operatorColor(op){
+//     op.
+// }
+
 const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
@@ -77,8 +89,13 @@ function showMeTheNum() {
             }
             currentNum.push(e.target.textContent);
             currentNum.splice(13, );
-            numInt = currentNum.join('');
-            screen.innerHTML = `<span class='digit-style'>${numInt}</span>`;
+            if(ifCurrentNumIsLong(currentNum)){
+                numInt = currentNum.join('');
+                screen.innerHTML = `<span style="font-size:60px;">${numInt}</span>`;//mistake//
+            }else {
+                numInt = currentNum.join('');
+                screen.innerHTML = `<span class='digit-style'>${numInt}</span>`;
+            }
         })
     })
 }
@@ -108,8 +125,13 @@ function clickOperator() {
                 let result = longResult.toString();
                 result = result.split('');
                 result.splice(13, );
-                result = Number(result.join(''));
-                screen.innerHTML = `<span class='digit-style'>${result}</span>`;
+                if(ifCurrentNumIsLong(result)){
+                    result = Number(result.join(''));
+                    screen.innerHTML = `<span style="font-size:60px;">${result}</span>`;
+                }else {
+                    result = Number(result.join(''));
+                    screen.innerHTML = `<span class='digit-style'>${result}</span>`;
+                }
                 digit1 = result;
                 digit2 = 0;
                 operator = currentOperator;
