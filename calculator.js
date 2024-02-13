@@ -1,4 +1,4 @@
-let digit1;
+let digit1 = false;
 let digit2;
 let operator;
 
@@ -21,6 +21,7 @@ function multiply(num1, num2) {
 function beDivide(num1, num2) {
     if (num1 === 0 || num2 === 0) {
         screen.innerHTML = `<span class='digit-style'>${'XD'}</span>`
+        digit1 = false;
         return 'XD'
     }
     const divide = num1 / num2;
@@ -49,7 +50,7 @@ function typeOp(op) {
 
 function clearCalculator() {
     currentNum = [];
-    digit1 = 0;
+    digit1 = false;
     operator = undefined;
     digit2 = 0;
     dot = '';
@@ -109,7 +110,7 @@ function clickOperator() {
                 operator = currentOperator;
                 return
             }
-            if (!digit1) {
+            if (digit1 === false) {
                 digit1 = currentNum.join('');
                 digit1 = Number(digit1);
                 currentNum = [];
