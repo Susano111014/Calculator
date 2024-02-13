@@ -120,8 +120,8 @@ function clickOperator() {
                 digit2 = currentNum.join('');
                 digit2 = Number(digit2);
                 const knowOp = typeOp(operator);
-                if (knowOp === "XD") { return }
                 const longResult = operate(knowOp, digit1, digit2);
+                if (longResult === "XD") { return } //if the an number is divide by 0
                 let result = longResult.toString();
                 result = result.split('');
                 result.splice(13, );
