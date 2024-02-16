@@ -55,9 +55,6 @@ function clearCalculator() {
     digit1 = false;
     operator = undefined;
     digit2 = 0;
-    dot = '';
-    document.querySelector('.dot').disabled = false;
-
 }
 
 function ifCurrentNumIsLong (num){
@@ -71,10 +68,7 @@ function ifCurrentNumIsLong (num){
 function clickStyleButton (e) {
     const text = e.textContent;
     e.addEventListener("mouseup", () => {
-        if(text === "." && !dot) {
-            e.style = "background-color: #3a3737;";
-            document.querySelector('.dot').disabled = true;
-        }else if (text === "AC" || text === "+/-" || text === "%") {
+        if (text === "AC" || text === "+/-" || text === "%") {
             e.style = "background-color: #a6a6a6;";
         }else if(e.classList.contains("operator")){
             e.style = "background-color: #ff8533";
@@ -88,7 +82,6 @@ const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
 let currentNum = [];
-let dot;
 
 function showMeTheNum() {
     let numInt = 0;
@@ -101,7 +94,7 @@ function showMeTheNum() {
                 e.target.style = "background-color: #a6a6a6;";
             }
             clickStyleButton(e.target);
-            if (e.target.textContent === "AC") {
+            if (e.target.textContent === "AC") {//delete button
                 clearCalculator();
                 screen.innerHTML = `<span class='digit-style'>${''}</span>`
                 return
@@ -131,12 +124,9 @@ function clickOperator() {
                 return
             }
             if (digit1 === false) {
-                digit1 = currentNum.join('');
-                digit1 = Number(digit1);
+                digit1 = Number(currentNum.join(''));
                 currentNum = [];
                 operator = currentOperator;
-                dot = "";
-                document.querySelector('.dot').disabled = false;
             } else {
                 digit2 = currentNum.join('');
                 digit2 = Number(digit2);
@@ -157,8 +147,6 @@ function clickOperator() {
                 digit2 = 0;
                 operator = currentOperator;
                 currentNum = [];
-                dot = "";
-                document.querySelector('.dot').disabled = false;
             }
         })
     })
@@ -166,3 +154,4 @@ function clickOperator() {
 
 clickOperator();
 
+//I had to be deleted everything code about the dot button's logic
