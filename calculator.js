@@ -1,3 +1,5 @@
+
+
 let digit1 = false;
 let digit2;
 let operator;
@@ -66,9 +68,21 @@ function ifCurrentNumIsLong (num){
     }
 }
 
-// function operatorColor(op){
-//     op.
-// }
+function clickStyleButton (e) {
+    const text = e.textContent;
+    e.addEventListener("mouseup", () => {
+        if(text === "." && !dot) {
+            e.style = "background-color: #3a3737;";
+            document.querySelector('.dot').disabled = true;
+        }else if (text === "AC" || text === "+/-" || text === "%") {
+            e.style = "background-color: #a6a6a6;";
+        }else if(e.classList.contains("operator")){
+            e.style = "background-color: #ff8533";
+        }else {
+            e.style = "background-color: #3a3737";
+        }
+    })
+}
 
 const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
@@ -79,14 +93,18 @@ let dot;
 function showMeTheNum() {
     let numInt = 0;
     displayValue.forEach((digits) => {
-        digits.addEventListener('click', (e) => {
+        digits.addEventListener("mousedown", (e) => {
+            const text = e.target.textContent;
+            if(text === "AC" || text === "+/-" || text === "%") {
+                e.target.style = "background-color: #fff;";
+            }else {
+                e.target.style = "background-color: #a6a6a6;";
+            }
+            clickStyleButton(e.target);
             if (e.target.textContent === "AC") {
                 clearCalculator();
                 screen.innerHTML = `<span class='digit-style'>${''}</span>`
                 return
-            }if(e.target.textContent === "." && !dot) {
-                dot = e.target.textContent;
-                document.querySelector('.dot').disabled = true;
             }
             currentNum.push(e.target.textContent);
             currentNum.splice(13, );
@@ -104,8 +122,10 @@ showMeTheNum();
 
 function clickOperator() {
     operators.forEach(Op => {
-        Op.addEventListener('click', (e) => {
+        Op.addEventListener('mousedown', (e) => {
             const currentOperator = e.target.textContent;
+            e.target.style = "background-color: #fff;";
+            clickStyleButton(e.target);
             if (operator === "=") {
                 operator = currentOperator;
                 return
@@ -122,13 +142,13 @@ function clickOperator() {
                 digit2 = Number(digit2);
                 const knowOp = typeOp(operator);
                 const longResult = operate(knowOp, digit1, digit2);
-                if (longResult === "XD") { return } //if the an number is divide by 0
+                if (longResult === "XD") { return } //if  an number is divide by 0
                 let result = longResult.toString();
                 result = result.split('');
                 result.splice(13, );
                 if(ifCurrentNumIsLong(result)){
                     result = Number(result.join(''));
-                    screen.innerHTML = `<span style="font-size:60px;">${result}</span>`;
+                    screen.innerHTML = `<span style="font-size:55px;">${result}</span>`;
                 }else {
                     result = Number(result.join(''));
                     screen.innerHTML = `<span class='digit-style'>${result}</span>`;
@@ -145,3 +165,4 @@ function clickOperator() {
 }
 
 clickOperator();
+

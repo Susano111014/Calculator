@@ -46,11 +46,13 @@ body {
 .operator {
     margin-right: 5px;
     background-color: #ff8533;
+    transition: 0.5s;
 }
 
 button {
     color: white;
     background-color: #3a3737;
+    transition: 0.5s;
     border-radius: 100%;
     border: 1px solid black;
     width: 85px;
