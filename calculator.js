@@ -55,25 +55,29 @@ function clearCalculator() {
     digit1 = false;
     operator = undefined;
     digit2 = 0;
+    screen.innerHTML = `<span class='digit-style'>${"0"}</span>`;
 }
 
-function ifCurrentNumIsLong (num){
-    if(num.length > 9){
-          return true
-    }else {
+function ifCurrentNumIsLong(num) {
+    if (num.length > 9) {
+        return true
+    } else {
         false
     }
 }
 
-function clickStyleButton (e) {
+function clickStyleButton(e) {
     const text = e.textContent;
     e.addEventListener("mouseup", () => {
         if (text === "AC" || text === "+/-" || text === "%") {
             e.style = "background-color: #a6a6a6;";
-        }else if(e.classList.contains("operator")){
+            //others
+        } else if (e.classList.contains("operator")) {
             e.style = "background-color: #ff8533";
-        }else {
+            //operators
+        } else {
             e.style = "background-color: #3a3737";
+            //digits
         }
     })
 }
@@ -81,16 +85,18 @@ function clickStyleButton (e) {
 const displayValue = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
+const dot = document.querySelector(".dot");
 let currentNum = [];
+screen.innerHTML = `<span class='digit-style'>${"0"}</span>`;
 
 function showMeTheNum() {
     let numInt = 0;
     displayValue.forEach((digits) => {
         digits.addEventListener("mousedown", (e) => {
             const text = e.target.textContent;
-            if(text === "AC" || text === "+/-" || text === "%") {
+            if (text === "AC" || text === "+/-" || text === "%") {
                 e.target.style = "background-color: #fff;";
-            }else {
+            } else {
                 e.target.style = "background-color: #a6a6a6;";
             }
             clickStyleButton(e.target);
@@ -99,12 +105,17 @@ function showMeTheNum() {
                 screen.innerHTML = `<span class='digit-style'>${''}</span>`
                 return
             }
+            if (currentNum.includes(".")) {
+                if (text == ".") {
+                    return
+                }
+            }
             currentNum.push(e.target.textContent);
-            currentNum.splice(13, );
-            if(ifCurrentNumIsLong(currentNum)){
+            currentNum.splice(13,);
+            if (ifCurrentNumIsLong(currentNum)) {
                 numInt = currentNum.join('');
                 screen.innerHTML = `<span style="font-size:60px;">${numInt}</span>`;//mistake//
-            }else {
+            } else {
                 numInt = currentNum.join('');
                 screen.innerHTML = `<span class='digit-style'>${numInt}</span>`;
             }
@@ -120,10 +131,16 @@ function clickOperator() {
             e.target.style = "background-color: #fff;";
             clickStyleButton(e.target);
             if (operator === "=") {
+                if (currentOperator === "=") {
+                    return
+                }
                 operator = currentOperator;
                 return
             }
             if (digit1 === false) {
+                if(!currentNum){
+                    digit1 = 0;
+                }
                 digit1 = Number(currentNum.join(''));
                 currentNum = [];
                 operator = currentOperator;
@@ -135,11 +152,11 @@ function clickOperator() {
                 if (longResult === "XD") { return } //if  an number is divide by 0
                 let result = longResult.toString();
                 result = result.split('');
-                result.splice(13, );
-                if(ifCurrentNumIsLong(result)){
+                result.splice(13,);
+                if (ifCurrentNumIsLong(result)) {
                     result = Number(result.join(''));
                     screen.innerHTML = `<span style="font-size:55px;">${result}</span>`;
-                }else {
+                } else {
                     result = Number(result.join(''));
                     screen.innerHTML = `<span class='digit-style'>${result}</span>`;
                 }
