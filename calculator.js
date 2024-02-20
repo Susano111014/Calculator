@@ -1,7 +1,7 @@
 
 
 let digit1 = false;
-let digit2;
+let digit2 = 0;
 let operator;
 
 
@@ -16,8 +16,12 @@ function subtract(num1, num2) {
 }
 
 function multiply(num1, num2) {
+    if (num1 === 0 || num2 === 0) {
+        return "XD"
+    }else { 
     const increase = num1 * num2;
     return increase
+    }
 }
 
 function beDivide(num1, num2) {
@@ -28,6 +32,11 @@ function beDivide(num1, num2) {
     }
     const divide = num1 / num2;
     return divide
+}
+
+function equal(num1) {
+    const result =  num1;
+    return result;
 }
 
 function operate(operation, num1, num2) {
@@ -47,15 +56,18 @@ function typeOp(op) {
         return type = multiply;
     } else if (op === '÷') {
         return type = beDivide;
+    }else if(op === "=") {
+        return type = equal
+       
     }
 }
 
 function clearCalculator() {
     currentNum = [];
     digit1 = false;
-    operator = undefined;
+    operator;
     digit2 = 0;
-    screen.innerHTML = `<span class='digit-style'>${"0"}</span>`;
+    globalResult = "";
 }
 
 function ifCurrentNumIsLong(num) {
@@ -87,6 +99,7 @@ const operators = document.querySelectorAll('.operator');
 const screen = document.querySelector('.screen');
 const dot = document.querySelector(".dot");
 let currentNum = [];
+let globalResult = "";
 screen.innerHTML = `<span class='digit-style'>${"0"}</span>`;
 
 function showMeTheNum() {
@@ -102,12 +115,23 @@ function showMeTheNum() {
             clickStyleButton(e.target);
             if (e.target.textContent === "AC") {//delete button
                 clearCalculator();
-                screen.innerHTML = `<span class='digit-style'>${''}</span>`
+                screen.innerHTML = `<span class='digit-style'>${'0'}</span>`
                 return
-            }
+            } 
             if (currentNum.includes(".")) {
                 if (text == ".") {
                     return
+                }
+            }else if(globalResult.toString().includes(".")){
+                    return
+            }
+            if(globalResult){
+                if(operator !== "="){
+                    digit1 = globalResult;
+                    globalResult = "";
+                }else{
+                    currentNum = globalResult.toString().split("");//fix  two dots in the same variable 
+                    globalResult = "";
                 }
             }
             currentNum.push(e.target.textContent);
@@ -131,20 +155,23 @@ function clickOperator() {
             e.target.style = "background-color: #fff;";
             clickStyleButton(e.target);
             if (operator === "=") {
-                if (currentOperator === "=") {
-                    return
-                }
-                operator = currentOperator;
-                return
+                operator = currentOperator;//fix it!!!!
             }
             if (digit1 === false) {
-                if(!currentNum){
+                if (!currentNum) {
                     digit1 = 0;
                 }
+            
+                if(globalResult){
+                    digit1 = globalResult;
+                    globalResult = "";
+                    operator = currentOperator;
+                    return
+                }       
                 digit1 = Number(currentNum.join(''));
                 currentNum = [];
-                operator = currentOperator;
-            } else {
+                operator = currentOperator;                             
+            }else {
                 digit2 = currentNum.join('');
                 digit2 = Number(digit2);
                 const knowOp = typeOp(operator);
@@ -160,8 +187,9 @@ function clickOperator() {
                     result = Number(result.join(''));
                     screen.innerHTML = `<span class='digit-style'>${result}</span>`;
                 }
-                digit1 = result;
-                digit2 = 0;
+                digit1 = false;//fix
+                digit2;
+                globalResult = result;
                 operator = currentOperator;
                 currentNum = [];
             }
